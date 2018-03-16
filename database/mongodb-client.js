@@ -10,11 +10,13 @@ const bdName = require('../config/env').mongodb_database_name;
 module.exports = {
     async executeFunction(func) {
         try {
-            let arr, client = await MongoClient.connect(url);
+            // Connect to a mongo instance
+            let err, client = await MongoClient.connect(url);
+            // Connect to a database from that instance
             const db = client.db(bdName);
-
+            // Run something
             func(db, client);
-
+            // Auto close connection
             client.close();
         }
         catch (err) {

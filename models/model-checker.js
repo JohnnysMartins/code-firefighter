@@ -6,11 +6,13 @@ let _modelsAreValid = (reqModel, baseModel) => {
 
     let isValid = true;
 
+    // First, check if the models have the same number of attrs
     if (reqModelKeys.length !== baseModelKeys.length) {
         return false;
     }
     else {
         reqModelKeys.forEach((key, index) => {
+            // Now, check for the equality of them
             if (key !== (index <= baseModelKeys.length && baseModelKeys[index])) {
                 isValid = false;
             }
