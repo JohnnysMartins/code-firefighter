@@ -1,7 +1,8 @@
-const modelFolder = './routes/';
-const fs = require('fs');
+import * as fs from 'fs';
 
-module.exports = {
+const modelFolder = './routes/';
+
+export default {
     /**
      * Start routes of server
      */    
@@ -10,7 +11,7 @@ module.exports = {
         fs.readdirSync(modelFolder).forEach(folder => {
             // check if the folder name isn't a file name
             if (folder.indexOf('.') < 0) {
-                require(`./${folder}/${folder}`);
+                import(`./${folder}/${folder}`);
             }
         });
     }

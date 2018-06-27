@@ -1,6 +1,6 @@
-let server = require('./server');
-let env = require('./config/env');
-let router = require('./routes');
+import server from './server';
+import env from './config/env';
+import router from './routes';
 
 router.initRoutes();
 
