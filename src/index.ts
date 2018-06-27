@@ -3,8 +3,7 @@ import {
 } from 'fs';
 import server from './server';
 import router from './routes';
-
-const env = JSON.parse(readFileSync('./config/env.json', 'utf-8'));
+import env from './config/env';
 
 router.initRoutes();
 
