@@ -1,8 +1,8 @@
 /**
  * Encapsulate server initialization and return server to index.js from root
  */
-import express from 'express';
-import bodyParser from 'body-parser';
+const express = require('express');
+const bodyParser = require('body-parser');
 
 let app = express();
 
