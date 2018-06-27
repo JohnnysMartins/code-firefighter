@@ -1,6 +1,8 @@
+import { readFileSync } from 'fs';
 import server from './server';
-import env from './config/env';
 import router from './routes';
+
+const env = JSON.parse(readFileSync('./config/env.json', 'utf-8'));
 
 router.initRoutes();
 
