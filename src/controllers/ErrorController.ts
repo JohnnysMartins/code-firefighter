@@ -1,19 +1,18 @@
-import { Document } from 'mongoose';
 import ErrorModel from '../models/ErrorModel';
+import IError from '../interfaces/IError';
+import IController from '../interfaces/IController';
 
-export default class ErrorController {
+export default class ErrorController implements IController<IError> {
 
-  private _errorDocument: Document;
+  constructor() {}
 
-  constructor(errorDocument?: Document) {
-    if (errorDocument) {
-      this._errorDocument = errorDocument;
+  save(errorObject: IError) {
+    if (errorObject) {
+      const model = new ErrorModel(errorObject);
+      return model.save();
     }
-  }
-
-  save() {
-    if (this._errorDocument) {
-      return this._errorDocument.save();
+    else {
+      throw 'No Document to save'
     }
   }
 
