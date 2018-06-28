@@ -9,7 +9,7 @@ export default {
     fs.readdirSync('./src/routes').forEach(folder => {
       // check if the folder name isn't a file name
       if (folder.indexOf('.') < 0) {
-        import (`./${folder}/${folder}`);
+        import (`./${folder}`);
       }
     });
   }
