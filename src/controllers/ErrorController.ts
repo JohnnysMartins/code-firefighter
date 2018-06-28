@@ -1,5 +1,5 @@
 import { Document } from 'mongoose';
-import { ErrorModel } from '../models/ErrorModel';
+import ErrorModel from '../models/ErrorModel';
 
 export default class ErrorController {
 
