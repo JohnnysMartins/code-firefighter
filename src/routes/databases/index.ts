@@ -6,13 +6,22 @@ import {
 import connected from '../../connection';
 import ErrorController from '../../controllers/ErrorController';
 import { Connection } from 'mongoose';
+import IError from '../../interfaces/IError';
 
 const errorController = new ErrorController();
 
 server.post('/databases/insert', (req: Request, res: Response) => {
   connected(async (connection: Connection) => {
-    const body = req.body();
-    const result = await errorController.save({message: 'oi'});
+    const body: IError = req.body();
+    const errorObject: IError = {
+      name: body.name,
+      message: body.message,
+      trace: body.trace,
+      userAgent: body.userAgent,
+      code: body.code,
+      isNodeError: body.isNodeError
+    }
+    const result = await errorController.save(errorObject);
     res.send(result);
     connection.close();
   })
