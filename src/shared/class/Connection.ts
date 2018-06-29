@@ -1,10 +1,9 @@
 import { connect, connection, Connection as MongoConnection } from 'mongoose';
-import env from '../config/env';
+import env from '../../config/env';
 import MongoNotConnectedException from '../exceptions/MongoNotConnectedException';
 
 export default class Connection {
 
-  private _callback;
   private db: MongoConnection;
 
   constructor() {}

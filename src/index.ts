@@ -1,7 +1,4 @@
-import {
-  readFileSync
-} from 'fs';
-import server from './server';
+import server from './shared/server';
 import router from './routes';
 import env from './config/env';
 
