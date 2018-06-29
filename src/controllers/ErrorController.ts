@@ -1,6 +1,7 @@
 import ErrorModel from '../models/ErrorModel';
 import IError from '../interfaces/IError';
 import IController from '../interfaces/IController';
+import { Document } from 'mongoose';
 
 export default class ErrorController implements IController<IError> {
 
@@ -8,7 +9,7 @@ export default class ErrorController implements IController<IError> {
 
   save(errorObject: IError) {
     if (errorObject) {
-      const model = new ErrorModel(errorObject);
+      const model: Document = new ErrorModel(errorObject);
       return model.save();
     }
     else {

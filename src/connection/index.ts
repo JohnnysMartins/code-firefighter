@@ -1,14 +1,33 @@
-import { connect, connection } from 'mongoose';
+import { connect, connection, Connection as MongoConnection } from 'mongoose';
 import env from '../config/env';
+import MongoNotConnectedException from '../exceptions/MongoNotConnectedException';
 
-const connectDb = (callback: any) => {
-  connect(`${env.mongodb_url}/${env.mongodb_database_name}`);
-  const db = connection;
+export default class Connection {
 
-  db.on('error', console.error.bind(console, 'connection error:'));
-  db.once('open', () => {
-    callback(db);
-  });
+  private _callback;
+  private db: MongoConnection;
+
+  constructor() {}
+
+  connect(): Promise<this> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        await connect(`${env.mongodb_url}/${env.mongodb_database_name}`);
+        this.db = connection;
+        resolve(this);
+      }
+      catch (err) {
+        reject(err);
+      }
+    })
+  }
+
+  run(cb) {
+    if (this.db.readyState === 1) {
+      cb(this.db);
+    }
+    else {
+      throw new MongoNotConnectedException;
+    }
+  }
 }
-
-export default connectDb;
