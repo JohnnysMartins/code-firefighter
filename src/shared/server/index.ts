@@ -14,7 +14,9 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors())
 
-app.use(logger);
+if (process.env.NODE_ENV !== 'production') {
+  app.use(logger);
+}
 app.use(exception);
 
 export default app;
