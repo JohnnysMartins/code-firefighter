@@ -8,10 +8,10 @@ const postChecking = [
   check('message').exists(),
   check('trace').exists()
 ];
-server.post('/error/insert', postChecking, async (req: Request, res: Response) => {
+server.post('/errors', postChecking, async (req: Request, res: Response) => {
   databaseInsert(req, res, validationResult);
 });
 
-server.get('/error/all', async (req: Request, res: Response) => {
+server.get('/errors', async (req: Request, res: Response) => {
   databaseFindAll(req, res);
 });

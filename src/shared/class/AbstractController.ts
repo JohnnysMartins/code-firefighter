@@ -1,4 +1,5 @@
 import { Document, DocumentQuery, Model } from "mongoose";
+import IError from "../../Error/IError";
 
 export abstract class AController<Interface> {
 
@@ -20,5 +21,13 @@ export abstract class AController<Interface> {
 
   findAll(): DocumentQuery<Document[], Document> {
     return this._model.find();
+  }
+
+  findById(id: number): DocumentQuery<Document, Document> {
+    return this._model.findById(id);
+  }
+
+  find(params: IError): DocumentQuery<Document, Document> {
+    return this._model.findById(params);
   }
 }

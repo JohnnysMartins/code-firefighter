@@ -16,7 +16,7 @@ export const databaseFindAll = async (req: Request, res: Response) => {
     result.run(async () => {
       const result = await errorController.findAll();
       if (result.length === 0) {
-        res.status(httpStatus.NO_CONTENT).send(result);
+        res.status(httpStatus.NO_CONTENT).send();
       }
       else {
         res.status(httpStatus.OK).send(result);
