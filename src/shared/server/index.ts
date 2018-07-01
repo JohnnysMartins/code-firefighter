@@ -1,11 +1,17 @@
 /**
  * Encapsulate server initialization and return server to index.js from root
  */
-const express = require('express');
-const bodyParser = require('body-parser');
+import * as express from 'express';
+import * as bodyParser from 'body-parser';
+import * as cors from 'cors';
 
-let app = express();
+import logger from './middlewares/logger';
+
+const app = express();
+
+app.use(logger);
 
 app.use(bodyParser.json());
+app.use(cors())
 
 export default app;
