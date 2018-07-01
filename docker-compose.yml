@@ -6,11 +6,14 @@ services:
     build: .
     environment:
       NODE_ENV: production
-      MONGO_DB: code-firefighter
+      MONGO_DB: firefighter
+      MONGO_URL: mongodb://mongo:27017
       PORT: 3000
     ports:
       - "3000:3000"
     links:
+      - mongo
+    depends_on:
       - mongo
   mongo:
     image: mongo
