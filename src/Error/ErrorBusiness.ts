@@ -25,7 +25,8 @@ export const databaseFindAll = async (req: Request, res: Response) => {
     });
   }
   catch (err) {
-    res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err);
+    console.error(err);
+    res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err.toString());
     connection.close();
   }
 }
@@ -61,7 +62,8 @@ export const databaseInsert = async (req: Request, res: Response, validationResu
     });
   }
   catch (err) {
-    res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err);
+    console.error(err);
+    res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err.toString());
     connection.close();
   }
 }
