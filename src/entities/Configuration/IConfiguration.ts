@@ -1,4 +1,4 @@
-import { IMongoModel } from './../shared/interfaces/IMongoModel';
+import { IMongoModel } from '../../shared/interfaces/IMongoModel';
 export interface IConfiguration extends IMongoModel {
   permissions: {
     createErrorLevel1: boolean;
@@ -6,5 +6,7 @@ export interface IConfiguration extends IMongoModel {
     createErrorLevel3: boolean;
     createErrorLevel4: boolean;
     createErrorLevel5: boolean;
-  }
+  },
+  authToken?: string,
+  name?: string
 }

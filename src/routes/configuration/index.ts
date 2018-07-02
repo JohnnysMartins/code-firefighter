@@ -1,4 +1,4 @@
-import { updateConfiguration, getConfiguration } from './../../Configuration/ConfigurationBusiness';
+import { updateConfiguration, getConfiguration } from '../../entities/Configuration/ConfigurationBusiness';
 import { Request, Response } from 'express';
 import { check, validationResult } from 'express-validator/check';
 

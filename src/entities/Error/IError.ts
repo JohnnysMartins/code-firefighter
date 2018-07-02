@@ -1,4 +1,4 @@
-import { IMongoModel } from './../shared/interfaces/IMongoModel';
+import { IMongoModel } from '../../shared/interfaces/IMongoModel';
 export default interface IError extends IMongoModel{
   name: string;
   message: string;

@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { connection } from 'mongoose';
 
 import ConfigurationController from './ConfigurationController';
-import ConnectionClass from '../shared/class/Connection';
+import ConnectionClass from '../../shared/class/Connection';
 
 import * as httpStatus from 'http-status-codes';
 

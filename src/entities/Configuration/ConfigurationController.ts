@@ -28,4 +28,16 @@ export default class ConfigurationController {
   getConfig(): DocumentQuery<Document, Document> {
     return configurationModel.findOne();
   }
+
+  getAuth(): Promise<string> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const configObject: any = await this.getConfig();
+        resolve(configObject.authToken);
+      }
+      catch (err) {
+        reject(err);
+      }
+    })
+  }
 }

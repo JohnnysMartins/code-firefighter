@@ -1,4 +1,4 @@
-import ConnectionClass from '../shared/class/Connection';
+import ConnectionClass from '../../shared/class/Connection';
 import ErrorController from './ErrorController';
 import IError from './IError';
 
