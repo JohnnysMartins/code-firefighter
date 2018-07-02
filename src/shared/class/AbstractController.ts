@@ -1,7 +1,7 @@
 import { Document, DocumentQuery, Model, Query } from "mongoose";
-import IError from "../../Error/IError";
+import { IMongoModel } from "../interfaces/IMongoModel";
 
-export abstract class AController<Interface> {
+export abstract class AController<Interface extends IMongoModel> {
 
   private _model: Model<Document>;
 
@@ -27,15 +27,15 @@ export abstract class AController<Interface> {
     return this._model.findById(id);
   }
 
-  find(params: IError): DocumentQuery<Document, Document> {
+  find(params: Interface): DocumentQuery<Document, Document> {
     return this._model.findById(params);
   }
 
-  delete(id: number): Query<IError> {
+  delete(id: number): Query<Interface> {
     return this._model.deleteOne(id);
   }
 
-  update(params: IError): DocumentQuery<Document, Document> {
+  update(params: Interface): DocumentQuery<Document, Document> {
     return this._model.findOneAndUpdate({ _id: params._id }, params);
   }
 }
