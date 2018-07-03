@@ -33,7 +33,12 @@ export default class ConfigurationController {
     return new Promise(async (resolve, reject) => {
       try {
         const configObject: any = await this.getConfig();
-        resolve(configObject.authToken);
+        if (configObject && configObject.authToken) {
+          resolve(configObject.authToken);
+        }
+        else {
+          resolve("");
+        }
       }
       catch (err) {
         reject(err);
