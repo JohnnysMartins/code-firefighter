@@ -9,7 +9,7 @@
     "build": "npm run clean && tsc",
     "server": "node dist/index.js",
     "watch:build": "npm run clean && tsc --watch",
-    "watch:server": "nodemon './dist/index.js' --watch './dist'"
+    "watch:server": "nodemon --inspect './dist/index.js' --watch './dist'"
   },
   "keywords": [
     "watch",
