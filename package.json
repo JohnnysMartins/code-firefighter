@@ -9,7 +9,7 @@
     "build": "npm run clean && tsc",
     "server": "node dist/index.js",
     "watch:build": "npm run clean && tsc --watch",
-    "watch:server": "nodemon './dist/index.js' --watch './dist'"
+    "watch:server": "nodemon --inspect './dist/index.js' --watch './dist'"
   },
   "keywords": [
     "watch",
@@ -23,6 +23,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/mongoose": "^5.0.18",
+    "@types/redis": "^2.8.6",
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "express": "^4.16.3",
@@ -31,6 +32,7 @@
     "moment": "^2.22.2",
     "mongodb": "^3.0.4",
     "mongoose": "^5.1.7",
+    "redis": "^2.8.0",
     "ts-node": "^7.0.0",
     "typescript": "^2.9.2"
   },
