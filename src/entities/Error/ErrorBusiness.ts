@@ -12,7 +12,7 @@ const connectionClass = new ConnectionClass();
 
 export const databaseFindAll = async (req: Request, res: Response) => {
   try {
-    await connectionClass.connect();
+    //await connectionClass.connect();
     const result = await errorController.findAll();
     if (result.length === 0) {
       res.status(httpStatus.NO_CONTENT).send();
@@ -32,7 +32,7 @@ export const databaseFindAll = async (req: Request, res: Response) => {
 
 export const databaseInsert = async (req: Request, res: Response) => {
   try {
-    await connectionClass.connect();
+    //await connectionClass.connect();
     const body: IError = req.body;
     const errorObject: IError = {
       name: body.name,

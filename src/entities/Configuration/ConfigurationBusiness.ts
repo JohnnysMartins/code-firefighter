@@ -12,7 +12,7 @@ const connectionClass = new ConnectionClass();
 
 export const updateConfiguration = async (req: Request, res: Response, configurationObject: IConfiguration) => {
   try {
-    await connectionClass.connect();
+    // await connectionClass.connect();
     const result = await configurationController.saveConfig(configurationObject);
     res.status(httpStatus.OK).send(result);
   }
@@ -27,7 +27,7 @@ export const updateConfiguration = async (req: Request, res: Response, configura
 
 export const getConfiguration = async (req: Request, res: Response) => {
   try {
-    await connectionClass.connect();
+    // await connectionClass.connect();
     const result = await configurationController.getConfig();
     res.status(httpStatus.OK).send(result);
   }

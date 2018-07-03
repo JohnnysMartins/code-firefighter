@@ -7,9 +7,9 @@ import server from '../../shared/server';
 import * as httpStatus from 'http-status-codes';
 
 const postChecking = [
-  check('name').exists().isString(),
-  check('message').exists().isString(),
-  check('trace').exists().isString()
+  check('name').exists(),
+  check('message').exists(),
+  check('trace').exists()
 ];
 server.post('/errors', postChecking, (req: Request, res: Response) => {
   const errors = validationResult(req);

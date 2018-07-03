@@ -24,7 +24,4 @@ export default async function (req: Request, res: Response, next: NextFunction) 
     console.error(err);
     res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err.toString());
   }
-  finally {
-    connection.close();
-  }
 }
