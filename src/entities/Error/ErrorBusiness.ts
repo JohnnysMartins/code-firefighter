@@ -1,18 +1,16 @@
-import ConnectionClass from '../../shared/class/Connection';
+import { connection } from 'mongoose';
+import { Request, Response, NextFunction } from 'express';
+
 import ErrorController from './ErrorController';
 import IError from './IError';
 
-import { connection } from 'mongoose';
-import { Request, Response } from 'express-serve-static-core';
-
 import * as httpStatus from 'http-status-codes';
+import GenericException from '../../shared/exceptions/GenericException';
 
 const errorController = new ErrorController();
-const connectionClass = new ConnectionClass();
 
-export const databaseFindAll = async (req: Request, res: Response) => {
+export const databaseFindAll = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    //await connectionClass.connect();
     const result = await errorController.findAll();
     if (result.length === 0) {
       res.status(httpStatus.NO_CONTENT).send();
@@ -22,17 +20,15 @@ export const databaseFindAll = async (req: Request, res: Response) => {
     }
   }
   catch (err) {
-    console.error(err);
-    res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err.toString());
+    next(new GenericException(err.name, err.message));
   }
   finally {
     connection.close();
   }
 }
 
-export const databaseInsert = async (req: Request, res: Response) => {
+export const databaseInsert = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    //await connectionClass.connect();
     const body: IError = req.body;
     const errorObject: IError = {
       name: body.name,
@@ -46,8 +42,7 @@ export const databaseInsert = async (req: Request, res: Response) => {
     res.status(httpStatus.CREATED).send(result);
   }
   catch (err) {
-    console.error(err);
-    res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err.toString());
+    next(new GenericException(err.name, err.message));
   }
   finally {
     connection.close();

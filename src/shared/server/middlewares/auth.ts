@@ -3,7 +3,8 @@ import { Request, Response, NextFunction } from "express";
 import ConfigurationController from "../../../entities/Configuration/ConfigurationController";
 import ConnectionClass from '../../class/Connection';
 
-import * as httpStatus from 'http-status-codes';
+import GenericException from '../../exceptions/GenericException';
+import AuthUnauthorizedException from '../../exceptions/AuthUnauthorizedException';
 
 const configurationController = new ConfigurationController();
 const connectionClass = new ConnectionClass();
@@ -17,11 +18,10 @@ export default async function (req: Request, res: Response, next: NextFunction) 
       next();
     }
     else {
-      res.status(httpStatus.UNAUTHORIZED).send('Unable to confirm authorization header');
+      next(new AuthUnauthorizedException());
     }
   }
   catch (err) {
-    console.error(err);
-    res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err.toString());
+    next(new GenericException(err.name, err.error));
   }
 }

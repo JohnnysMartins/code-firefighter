@@ -1,24 +1,25 @@
-import { Request, Response } from 'express-serve-static-core';
+import { Request, Response, NextFunction } from 'express';
 import { check, validationResult } from 'express-validator/check';
 import { databaseInsert, databaseFindAll } from '../../entities/Error/ErrorBusiness'
 
 import server from '../../shared/server';
 
-import * as httpStatus from 'http-status-codes';
+import UnprocessableEntityException from '../../shared/exceptions/UnprocessableEntityException';
 
 const postChecking = [
   check('name').exists(),
   check('message').exists(),
   check('trace').exists()
 ];
-server.post('/errors', postChecking, (req: Request, res: Response) => {
+server.post('/errors', postChecking, (req: Request, res: Response, next: NextFunction) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(httpStatus.UNPROCESSABLE_ENTITY).json({ errors: errors.array() });
+    next(new UnprocessableEntityException(errors.array()));
+    return;
   }
-  databaseInsert(req, res);
+  databaseInsert(req, res, next);
 });
 
-server.get('/errors', (req: Request, res: Response) => {
-  databaseFindAll(req, res);
+server.get('/errors', (req: Request, res: Response, next: NextFunction) => {
+  databaseFindAll(req, res, next);
 });
