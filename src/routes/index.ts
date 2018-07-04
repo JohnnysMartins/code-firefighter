@@ -1,18 +1,13 @@
 import * as fs from 'fs';
+import errorRoute from './error';
+import configurationRoute from './configuration';
 
 export default {
   /**
    * Start routes of server
    */
   initRoutes() {
-    // Init all routes from ./routes folder
-    fs.readdirSync('./src/routes').forEach(folder => {
-      // check if the folder name isn't a file name
-      if (folder.indexOf('.') < 0 && folder !== '404') {
-        import (`./${folder}`);
-      }
-    });
-    // This need to be the last import to work properly
-    import (`./${'404'}`)
+    errorRoute.initRoute();
+    configurationRoute.initRoute();
   }
 }

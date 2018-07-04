@@ -6,6 +6,7 @@ import * as cors from 'cors';
 import logger from './logger';
 import auth from './auth';
 import exception from './exception';
+import notFound from './404';
 
 export default {
   initMiddlewares() {
@@ -16,6 +17,9 @@ export default {
       server.use(logger);
     }
     server.use(auth);
+  },
+  initExceptionMiddlewares() {
+    server.use(notFound);
     server.use(exception);
   }
 }

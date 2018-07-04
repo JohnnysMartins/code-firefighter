@@ -15,9 +15,11 @@ export default async function (req: Request, res: Response, next: NextFunction) 
     const authHeader = req.headers.authorization || "";
     const configToken = await configurationController.getAuth();
     if (authHeader === configToken) {
+      console.log('[AUTH] Authentication ok');
       next();
     }
     else {
+      console.log('[AUTH] Authentication nok');
       next(new AuthUnauthorizedException());
     }
   }
