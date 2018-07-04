@@ -7,6 +7,7 @@ const databaseSchema = new Schema({
   code: String || Number,
   userAgent: String,
   isNodeError: Boolean,
+  os: String
 });
 
 const ErrorModel = model('Error', databaseSchema);

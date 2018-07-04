@@ -6,4 +6,5 @@ export default interface IError extends IMongoModel{
   code?: number | string;
   userAgent?: string;
   isNodeError?: boolean;
+  os?: string;
 }
