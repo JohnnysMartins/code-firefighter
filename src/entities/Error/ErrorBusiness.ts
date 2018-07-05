@@ -9,7 +9,7 @@ import GenericException from '../../shared/exceptions/GenericException';
 
 const errorController = new ErrorController();
 
-export const databaseFindAll = async (req: Request, res: Response, next: NextFunction) => {
+export const errorFindAll = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await errorController.findAll();
     if (result.length === 0) {
@@ -27,7 +27,7 @@ export const databaseFindAll = async (req: Request, res: Response, next: NextFun
   }
 }
 
-export const databaseInsert = async (req: Request, res: Response, next: NextFunction) => {
+export const errorPost = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const body: IError = req.body;
     const errorObject: IError = {
