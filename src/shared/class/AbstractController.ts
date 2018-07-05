@@ -45,16 +45,16 @@ export abstract class AController<Interface extends IMongoModel> {
     });
   }
 
-  findById(id: number): DocumentQuery<Document, Document> {
-    return this._model.findById(id);
+  findById(id: string): DocumentQuery<Document, Document> {
+    return this._model.findById({_id: id});
   }
 
   find(params: Interface): DocumentQuery<Document, Document> {
     return this._model.findById(params);
   }
 
-  delete(id: number): Query<Interface> {
-    return this._model.deleteOne(id);
+  delete(id: string): Query<Interface> {
+    return this._model.deleteOne({_id: id});
   }
 
   update(params: Interface): DocumentQuery<Document, Document> {
