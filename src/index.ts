@@ -13,6 +13,6 @@ server.listen(env.server_port, () => {
     font: 'Fire Font-s',
     horizontalLayout: 'default',
     verticalLayout: 'default'
-  }));
-  console.log("\x1b[0m", `Fighting fire with fire on port ${env.server_port}`);
+  }), "\x1b[0m");
+  console.log(`Fighting fire with fire on port ${env.server_port}`);
 });

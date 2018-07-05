@@ -19,7 +19,7 @@ export default async function (req: Request, res: Response, next: NextFunction) 
       next();
     }
     else {
-      console.log('[AUTH] Authentication nok');
+      console.error('[AUTH] Authentication nok');
       next(new AuthUnauthorizedException());
     }
   }
