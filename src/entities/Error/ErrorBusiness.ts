@@ -34,6 +34,7 @@ export const errorPost = async (req: Request, res: Response, next: NextFunction)
       name: body.name,
       message: body.message,
       trace: body.trace,
+      date: body.date,
       userAgent: body.userAgent,
       code: body.code,
       isNodeError: body.isNodeError
