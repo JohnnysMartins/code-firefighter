@@ -15,4 +15,5 @@ server.listen(env.server_port, () => {
     verticalLayout: 'default'
   }), "\x1b[0m");
   console.log(`Fighting fire with fire on port ${env.server_port}`);
+  console.log(`Version ${process.env.npm_package_version}`);
 });
