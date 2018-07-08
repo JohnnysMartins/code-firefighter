@@ -1,17 +1,12 @@
 import { Document, DocumentQuery, Model, Query } from "mongoose";
 import { IMongoModel } from "../interfaces/IMongoModel";
 
-import RedisController from './RedisController';
-import IError from "../../entities/Error/IError";
-
 export abstract class AController<Interface extends IMongoModel> {
 
   private _model: Model<Document>;
-  private redisController: RedisController;
 
   constructor(model: Model<Document>) {
     this._model = model;
-    this.redisController = new RedisController();
   }
 
   save(obj: Interface): Promise<Document> {
@@ -24,25 +19,8 @@ export abstract class AController<Interface extends IMongoModel> {
     }
   }
 
-  findAll(): Promise<IError[]> {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const result = await this.redisController.getCache('all');
-        if (result) {
-          resolve(JSON.parse(result));
-        }
-        else {
-          const result = await this._model.find();
-          await this.redisController.setCache('all', JSON.stringify(result));
-          //@ts-ignore
-          resolve(result);
-        }
-      }
-      catch (err) {
-        console.error(err);
-        reject(err);
-      }
-    });
+  findAll(): DocumentQuery<Document[], Document> {
+    return this._model.find();
   }
 
   findById(id: string): DocumentQuery<Document, Document> {

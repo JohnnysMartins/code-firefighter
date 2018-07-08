@@ -16,7 +16,7 @@ export default class RedisController {
     return this.getAsync(key);
   }
 
-  setCache(key: string, value: any): Promise<any> {
-    return this.setAsync(key, value, 'EX', 15);
+  setCache(key: string, value: any, operation: string = 'EX', expireTimer = 15): Promise<any> {
+    return this.setAsync(key, value, operation, expireTimer);
   }
 }
