@@ -1,22 +1,26 @@
+import { Request, Response, NextFunction, Router } from 'express';
 import { updateConfiguration, getConfiguration } from '../../entities/Configuration/ConfigurationBusiness';
-import { Request, Response } from 'express';
 import { check, validationResult } from 'express-validator/check';
 
-import server from '../../shared/server';
+import UnprocessableEntityException from '../../shared/exceptions/UnprocessableEntityException';
 
-import * as httpStatus from 'http-status-codes';
+const router = Router();
 
 const postChecking = [
   check('permissions').exists(),
 ];
-server.post('/configuration', postChecking, (req: Request, res: Response) => {
+
+router.post('/', postChecking, (req: Request, res: Response, next: NextFunction) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(httpStatus.UNPROCESSABLE_ENTITY).json({ errors: errors.array() });
+    next(new UnprocessableEntityException(errors.array()));
+    return;
   }
-  updateConfiguration(req, res, req.body);
+  updateConfiguration(req, res, next, req.body);
 });
 
-server.get('/configuration', (req: Request, res: Response) => {
-  getConfiguration(req, res);
+router.get('/', (req: Request, res: Response, next: NextFunction) => {
+  getConfiguration(req, res, next);
 });
+
+export default router;

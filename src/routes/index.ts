@@ -1,16 +1,13 @@
-import * as fs from 'fs';
+import errorRoute from './error';
+import configurationRoute from './configuration';
+import server from '../shared/server';
 
 export default {
   /**
    * Start routes of server
    */
   initRoutes() {
-    // Init all routes from ./routes folder
-    fs.readdirSync('./src/routes').forEach(folder => {
-      // check if the folder name isn't a file name
-      if (folder.indexOf('.') < 0) {
-        import (`./${folder}`);
-      }
-    });
+    server.use('/errors', errorRoute);
+    server.use('/configurations', configurationRoute);
   }
 }

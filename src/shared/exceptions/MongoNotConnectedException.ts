@@ -1,6 +1,8 @@
-export default class MongoNotConnectedException extends Error {
+import GenericException from "./GenericException";
+
+export default class MongoNotConnectedException extends GenericException {
   constructor() {
-    super('Not connect to a mongo dabatase');
+    super('MongoNotConnectedException', 'Not connected to a mongo dabatase');
 
     Object.setPrototypeOf(this, MongoNotConnectedException.prototype);
   }

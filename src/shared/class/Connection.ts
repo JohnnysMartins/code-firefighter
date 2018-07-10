@@ -8,17 +8,28 @@ export default class Connection {
 
   constructor() {}
 
-  connect(): Promise<this> {
+  connect(whoCalledMe?: string): Promise<this> {
     return new Promise(async (resolve, reject) => {
       try {
-        await connect(`${env.mongodb_url}/${env.mongodb_database_name}`);
+        await connect(`${env.mongodb_url}/${env.mongodb_database_name}`, {
+          poolSize: 10,
+          bufferMaxEntries: 0,
+          bufferCommands: false
+        });
         this.db = connection;
+        if (this.db.readyState !== 1) {
+          throw new MongoNotConnectedException;
+        }
         resolve(this);
       }
       catch (err) {
         reject(err);
       }
     })
+  }
+
+  disconnect(): Promise<any> {
+    return this.db.close();
   }
 
   run(cb) {

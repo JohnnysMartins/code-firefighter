@@ -1,43 +1,48 @@
-import ConnectionClass from '../../shared/class/Connection';
+import { connection } from 'mongoose';
+import { Request, Response, NextFunction } from 'express';
+
 import ErrorController from './ErrorController';
 import IError from './IError';
 
-import { connection } from 'mongoose';
-import { Request, Response } from 'express-serve-static-core';
-
 import * as httpStatus from 'http-status-codes';
+import GenericException from '../../shared/exceptions/GenericException';
+import RedisController from '../../shared/class/RedisController';
 
 const errorController = new ErrorController();
-const connectionClass = new ConnectionClass();
+const redisController = new RedisController();
 
-export const databaseFindAll = async (req: Request, res: Response) => {
+export const errorFindAll = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    await connectionClass.connect();
+    const redisResult = await redisController.getCache('ERROR_all');
+    if (redisResult) {
+      res.status(httpStatus.OK).send(redisResult);
+      return;
+    }
     const result = await errorController.findAll();
+    await redisController.setCache('ERROR_all', result);
     if (result.length === 0) {
       res.status(httpStatus.NO_CONTENT).send();
     }
-    else {
+    else {;
       res.status(httpStatus.OK).send(result);
     }
   }
   catch (err) {
-    console.error(err);
-    res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err.toString());
+    next(new GenericException(err.name, err.message));
   }
   finally {
     connection.close();
   }
 }
 
-export const databaseInsert = async (req: Request, res: Response) => {
+export const errorPost = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    await connectionClass.connect();
     const body: IError = req.body;
     const errorObject: IError = {
       name: body.name,
       message: body.message,
       trace: body.trace,
+      date: body.date,
       userAgent: body.userAgent,
       code: body.code,
       isNodeError: body.isNodeError
@@ -46,8 +51,7 @@ export const databaseInsert = async (req: Request, res: Response) => {
     res.status(httpStatus.CREATED).send(result);
   }
   catch (err) {
-    console.error(err);
-    res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err.toString());
+    next(new GenericException(err.name, err.message));
   }
   finally {
     connection.close();

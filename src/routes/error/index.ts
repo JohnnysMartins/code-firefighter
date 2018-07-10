@@ -1,24 +1,28 @@
-import { Request, Response } from 'express-serve-static-core';
+import { Request, Response, NextFunction, Router } from 'express';
 import { check, validationResult } from 'express-validator/check';
-import { databaseInsert, databaseFindAll } from '../../entities/Error/ErrorBusiness'
+import { errorPost, errorFindAll } from '../../entities/Error/ErrorBusiness'
 
-import server from '../../shared/server';
+import UnprocessableEntityException from '../../shared/exceptions/UnprocessableEntityException';
 
-import * as httpStatus from 'http-status-codes';
+const router = Router();
 
 const postChecking = [
-  check('name').exists().isString(),
-  check('message').exists().isString(),
-  check('trace').exists().isString()
+  check('name').exists(),
+  check('message').exists(),
+  check('trace').exists()
 ];
-server.post('/errors', postChecking, (req: Request, res: Response) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(httpStatus.UNPROCESSABLE_ENTITY).json({ errors: errors.array() });
-  }
-  databaseInsert(req, res);
+
+router.get('/', (req: Request, res: Response, next: NextFunction) => {
+  errorFindAll(req, res, next);
 });
 
-server.get('/errors', (req: Request, res: Response) => {
-  databaseFindAll(req, res);
+router.post('/', postChecking, (req: Request, res: Response, next: NextFunction) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    next(new UnprocessableEntityException(errors.array()));
+    return;
+  }
+  errorPost(req, res, next);
 });
+
+export default router;
