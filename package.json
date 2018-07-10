@@ -20,9 +20,19 @@
     "nodejs",
     "spa",
     "client",
-    "server"
+    "server",
+    "events",
+    "dashboard"
   ],
-  "author": "Wanderson Alves",
+  "author": "Wanderson Alves <wandersonalvesferreira2012@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WandersonAlves/code-firefighter/.git"
+  },
+  "bugs": {
+    "url": "https://github.com/WandersonAlves/code-firefighter/issues"
+  },
+  "homepage": "https://github.com/WandersonAlves/code-firefighter/#readme",
   "license": "ISC",
   "dependencies": {
     "@types/mongoose": "^5.0.18",
