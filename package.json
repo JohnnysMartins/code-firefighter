@@ -1,6 +1,6 @@
 {
   "name": "code-firefigher",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Keep track of errors on your back/front-end codebase!",
   "main": "index.js",
   "scripts": {
