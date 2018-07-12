@@ -1,9 +1,9 @@
 import { IMongoModel } from "../../shared/interfaces/IMongoModel";
 
 export default interface IUser extends IMongoModel {
-  name: string;
-  password: string;
-  role: string;
+  name?: string;
+  password?: string;
+  role?: string;
   picture?: string;
   permissions?: IUserPermissions[];
 }
