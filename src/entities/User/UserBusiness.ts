@@ -73,3 +73,19 @@ export const getAllUsers = async (req: Request, res: Response, next: NextFunctio
     connection.close();
   }
 }
+
+export const getHasAdminUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const result = await userController.find({role: 'admin'});
+    if (result.length) {
+      return res.status(httpStatus.OK).send(result);
+    }
+    return res.status(httpStatus.NO_CONTENT).send();
+  }
+  catch (err) {
+    next(new GenericException(err.name, err.message));
+  }
+  finally {
+    connection.close();
+  }
+}
