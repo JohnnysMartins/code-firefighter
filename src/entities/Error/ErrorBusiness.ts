@@ -45,7 +45,8 @@ export const errorPost = async (req: Request, res: Response, next: NextFunction)
       date: body.date,
       userAgent: body.userAgent,
       code: body.code,
-      isNodeError: body.isNodeError
+      isNodeError: body.isNodeError,
+      appName: body.appName
     }
     const result = await errorController.save(errorObject);
     res.status(httpStatus.CREATED).send(result);
