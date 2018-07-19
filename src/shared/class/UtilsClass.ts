@@ -2,16 +2,12 @@ export default class UtilsClass {
   constructor () {}
 
   public parseEntityToRedis (object: any) {
-    let newObject = {};
-    Object.getOwnPropertyNames(object).map(attr => {
-      if (object[attr]) {
-        newObject[attr] = object[attr];
-      }
-    });
-    return JSON.stringify(newObject);
+    console.log('entity > redis', object)
+    return JSON.stringify(object);
   }
 
   public parseRedisToEntity (object) {
+    console.log('redis > entity', object);
     return JSON.parse(object);
   }
 }
