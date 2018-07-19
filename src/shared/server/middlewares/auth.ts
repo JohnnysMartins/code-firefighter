@@ -11,7 +11,7 @@ const connectionClass = new ConnectionClass();
 
 export default async function (req: Request, res: Response, next: NextFunction) {
   try {
-    await connectionClass.connect('auth.ts');
+    await connectionClass.connect();
     const authHeader = req.headers.authorization || "";
     const configToken = await configurationController.getAuth();
     if (authHeader === configToken) {
