@@ -1,3 +1,27 @@
+### 0.1.0 (2018-07-19)
+
+##### Chores
+
+*  use volumes tag (2334ec3c)
+
+##### New Features
+
+* **redis:**
+  *  use parse/stringify inside RedisController (d2d0b142)
+  *  parse entities to redis cache (d5bec389)
+* **error:**
+  *  remove cache maintance from business (bfffaf7f)
+  *  add more required fields (ee4e13e7)
+*  add compression to server; misc changes (e5ccfd67)
+* **user:**
+  *  getHasAdminUser (fa78305b)
+  *  add 'role' field to UserModel (c10b1878)
+
+##### Bug Fixes
+
+*  find from abstractController (7ad90bad)
+*  get statusCode from GenericException (0bb5743e)
+
 #### 0.0.3 (2018-07-10)
 
 ##### Chores
