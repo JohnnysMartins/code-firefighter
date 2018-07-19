@@ -7,24 +7,26 @@ import IError from './IError';
 import * as httpStatus from 'http-status-codes';
 import GenericException from '../../shared/exceptions/GenericException';
 import RedisController from '../../shared/class/RedisController';
+import UtilsClass from '../../shared/class/UtilsClass';
 
 const errorController = new ErrorController();
 const redisController = new RedisController();
+const utils = new UtilsClass();
 
 export const errorFindAll = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const redisResult = await redisController.getCache('ERROR_all');
     if (redisResult) {
-      res.status(httpStatus.OK).send(redisResult);
+      res.status(httpStatus.OK).send(utils.parseRedisToEntity(redisResult));
       return;
     }
     const result = await errorController.findAll();
-    await redisController.setCache('ERROR_all', result);
+    await redisController.setCache('ERROR_all', utils.parseEntityToRedis(result));
     if (result.length === 0) {
       res.status(httpStatus.NO_CONTENT).send();
     }
     else {;
-      res.status(httpStatus.OK).send(result);
+      res.status(httpStatus.OK).json(result);
     }
   }
   catch (err) {
@@ -45,10 +47,11 @@ export const errorPost = async (req: Request, res: Response, next: NextFunction)
       date: body.date,
       userAgent: body.userAgent,
       code: body.code,
-      isNodeError: body.isNodeError
+      isNodeError: body.isNodeError,
+      appName: body.appName
     }
     const result = await errorController.save(errorObject);
-    res.status(httpStatus.CREATED).send(result);
+    res.status(httpStatus.CREATED).json(result);
   }
   catch (err) {
     next(new GenericException(err.name, err.message));
