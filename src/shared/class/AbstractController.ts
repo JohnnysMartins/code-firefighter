@@ -27,8 +27,8 @@ export abstract class AController<Interface extends IMongoModel> {
     return this._model.findById({_id: id});
   }
 
-  find(params: Interface): DocumentQuery<Document, Document> {
-    return this._model.findById(params);
+  find(params: Interface): DocumentQuery<Document[], Document> {
+    return this._model.find(params);
   }
 
   delete(id: string): Query<Interface> {

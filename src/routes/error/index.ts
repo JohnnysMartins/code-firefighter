@@ -9,7 +9,9 @@ const router = Router();
 const postChecking = [
   check('name').exists(),
   check('message').exists(),
-  check('trace').exists()
+  check('trace').exists(),
+  check('date').exists(),
+  check('appName').exists()
 ];
 
 router.get('/', (req: Request, res: Response, next: NextFunction) => {

@@ -5,6 +5,7 @@ const databaseSchema = new Schema({
   message: { type: String, required: true },
   trace: { type: String, required: true },
   date: { type: String, required: true },
+  appName: { type: String, required: true},
   code: String || Number,
   userAgent: String,
   isNodeError: Boolean,

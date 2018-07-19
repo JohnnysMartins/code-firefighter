@@ -8,7 +8,7 @@ export default class Connection {
 
   constructor() {}
 
-  connect(whoCalledMe?: string): Promise<this> {
+  connect(): Promise<this> {
     return new Promise(async (resolve, reject) => {
       try {
         await connect(`${env.mongodb_url}/${env.mongodb_database_name}`, {

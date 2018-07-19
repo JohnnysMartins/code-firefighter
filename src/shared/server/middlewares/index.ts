@@ -2,6 +2,7 @@ import server from '../index';
 
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
+import * as compression from 'compression';
 
 import logger from './logger';
 import auth from './auth';
@@ -10,6 +11,7 @@ import notFound from './404';
 
 export default {
   initMiddlewares() {
+    server.use(compression());
     server.use(bodyParser.json());
     server.use(cors())
 

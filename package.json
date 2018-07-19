@@ -1,6 +1,6 @@
 {
   "name": "code-firefigher",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Keep track of errors on your back/front-end codebase!",
   "main": "index.js",
   "scripts": {
@@ -38,6 +38,7 @@
     "@types/mongoose": "^5.0.18",
     "@types/redis": "^2.8.6",
     "body-parser": "^1.18.2",
+    "compression": "^1.7.3",
     "cors": "^2.8.4",
     "express": "^4.16.3",
     "express-validator": "^5.2.0",

@@ -24,7 +24,7 @@ export const errorFindAll = async (req: Request, res: Response, next: NextFuncti
       res.status(httpStatus.NO_CONTENT).send();
     }
     else {;
-      res.status(httpStatus.OK).send(result);
+      res.status(httpStatus.OK).json(result);
     }
   }
   catch (err) {
@@ -45,10 +45,11 @@ export const errorPost = async (req: Request, res: Response, next: NextFunction)
       date: body.date,
       userAgent: body.userAgent,
       code: body.code,
-      isNodeError: body.isNodeError
+      isNodeError: body.isNodeError,
+      appName: body.appName
     }
     const result = await errorController.save(errorObject);
-    res.status(httpStatus.CREATED).send(result);
+    res.status(httpStatus.CREATED).json(result);
   }
   catch (err) {
     next(new GenericException(err.name, err.message));
