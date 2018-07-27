@@ -4,6 +4,7 @@ import { connection } from 'mongoose';
 import IUser from "./IUser";
 import UserController from "./UserController";
 import GenericException from '../../shared/exceptions/GenericException';
+import TryCatch from '../../shared/utils/TryCatchDecorator';
 
 import * as httpStatus from 'http-status-codes';
 
@@ -78,12 +79,36 @@ export const getHasAdminUser = async (req: Request, res: Response, next: NextFun
   try {
     const result = await userController.find({role: 'admin'});
     if (result.length) {
-      return res.status(httpStatus.OK).send(result);
+      return res.status(httpStatus.OK).send(true);
     }
     return res.status(httpStatus.NO_CONTENT).send();
   }
   catch (err) {
     next(new GenericException(err.name, err.message));
+  }
+  finally {
+    connection.close();
+  }
+}
+
+export const createAdminUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const newAdminUser: IUser = {
+      name: 'admin',
+      role: 'admin',
+      password: 'admin'
+    }
+    const searchUser = await userController.find({role: 'admin', name: 'admin'});
+    if (searchUser.length > 0) {
+      throw new GenericException('AdminAlreadyCreatedException', 'System already have a admin user');
+    }
+    else {
+      const result = await userController.save(newAdminUser);
+      return res.status(httpStatus.CREATED).send(result);
+    }
+  }
+  catch (e) {
+    next(new GenericException(e.name, e.message));
   }
   finally {
     connection.close();
