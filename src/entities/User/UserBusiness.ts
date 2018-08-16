@@ -4,7 +4,6 @@ import { connection } from 'mongoose';
 import IUser from "./IUser";
 import UserController from "./UserController";
 import GenericException from '../../shared/exceptions/GenericException';
-import TryCatch from '../../shared/utils/TryCatchDecorator';
 
 import * as httpStatus from 'http-status-codes';
 
@@ -75,11 +74,11 @@ export const getAllUsers = async (req: Request, res: Response, next: NextFunctio
   }
 }
 
-export const getHasAdminUser = async (req: Request, res: Response, next: NextFunction) => {
+export const getAdminUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const result = await userController.find({role: 'admin'});
+    const result = await userController.find({role: 'admin'}).select({password: false});
     if (result.length) {
-      return res.status(httpStatus.OK).send(true);
+      return res.status(httpStatus.OK).send(result[0]);
     }
     return res.status(httpStatus.NO_CONTENT).send();
   }
@@ -106,6 +105,23 @@ export const createAdminUser = async (req: Request, res: Response, next: NextFun
       const result = await userController.save(newAdminUser);
       return res.status(httpStatus.CREATED).send(result);
     }
+  }
+  catch (e) {
+    next(new GenericException(e.name, e.message));
+  }
+  finally {
+    connection.close();
+  }
+}
+
+export const changeAdminPassword = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const [admin] = await userController.find({role: 'admin', name: 'admin'});
+    if (!admin._id) {
+      throw new GenericException('AdminUserNotFound', 'Unable to find a admin user');
+    }
+    const result = await admin.update({password: req.body.password});
+    return res.status(httpStatus.OK).send(result);
   }
   catch (e) {
     next(new GenericException(e.name, e.message));
