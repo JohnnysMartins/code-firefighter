@@ -23,7 +23,7 @@ export const errorFindAll = async (req: Request, res: Response, next: NextFuncti
     if (result.length === 0) {
       res.status(httpStatus.NO_CONTENT).send();
     }
-    else {;
+    else {
       res.status(httpStatus.OK).json(result);
     }
   }
