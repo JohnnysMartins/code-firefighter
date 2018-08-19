@@ -1,5 +1,6 @@
 import { Document, DocumentQuery, Model, Query } from "mongoose";
 import { IMongoModel } from "../interfaces/IMongoModel";
+import UnprocessableEntityException from "../exceptions/UnprocessableEntityException";
 
 export abstract class AController<Interface extends IMongoModel> {
 
@@ -15,7 +16,7 @@ export abstract class AController<Interface extends IMongoModel> {
       return model.save();
     }
     else {
-      throw 'No Document to save';
+      throw new UnprocessableEntityException(null)
     }
   }
 
