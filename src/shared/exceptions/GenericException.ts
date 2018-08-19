@@ -1,8 +1,11 @@
+import * as httpStatus from 'http-status-codes';
+
 export default class GenericException extends Error {
 
-  public statusCode;
-  public extras;
-  constructor(name: string, msg: string, extras?: any, statusCode = 500) {
+  public statusCode: number;
+  public extras: any;
+
+  constructor(name: string, msg: string, extras?: any, statusCode = httpStatus.INTERNAL_SERVER_ERROR) {
     super(msg);
     this.statusCode = statusCode;
     this.name = name;
